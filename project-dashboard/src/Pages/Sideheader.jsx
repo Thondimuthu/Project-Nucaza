@@ -12,9 +12,9 @@ function NavHeader() {
         { id: 2, component: <Notification /> },
         { id: 3, component: <Profile /> },
     ];
-    // const handleOpenItem = (id) => {
-    //     setActiveItemId(id === activeItemId ? null : id);
-    // }
+    const handleOpenItem = (id) => {
+        setActiveItemId(id === activeItemId ? null : id);
+    }
     return (
         <nav className="bg-indigo-800 h-16 p-3 shadow-sm flex flex-wrap justify-between items-center">
             {/* Logo Section */}
