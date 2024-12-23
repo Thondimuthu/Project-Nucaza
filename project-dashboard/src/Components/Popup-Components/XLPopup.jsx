@@ -305,8 +305,15 @@ function Xlpopup() {
                                 {/* this is Download  part */}
 
 
-                                
-                                <div className="flex justify-end gap-6 mt-4 border ">
+
+                                <div className="flex justify-between gap-6 mt-4 border ">
+                                <button
+                                        // onClick={SaveToExcel}
+                                        className="bg-green-500 flex gap-2 text-white py-2 px-6 rounded-md hover:bg-green-600"
+                                    >
+                                        Save
+                                        
+                                    </button>
                                     <button
                                         onClick={exportToExcel}
                                         className="bg-green-500 flex gap-2 text-white py-2 px-6 rounded-md hover:bg-green-600"
