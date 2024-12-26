@@ -1,23 +1,10 @@
-import ExcelData from "../Schema/ExcelShema";
+import mongoose from 'mongoose';
+import excelSchema from '../Schema/E-shema.js';
 
-// Connect to MongoDB
-// mongoose.connect('mongodb://localhost:27017/excel_db', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
 
-const saveData = async (req,res) => {
-    let reqBody=req.body;
-
-  try {
-    const excelData = new ExcelData();
-    const result = await excelData.save();
-    console.log("Data saved successfully:", result);
-    mongoose.connection.close();
-  } catch (error) {
-    console.error("Error saving data:", error);
-    mongoose.connection.close();
-  }
+export async function saveData(req, res) {
+    const data = req.body.data;
+    // Process the data and save it to the database (e.g., MongoDB)
+    console.log(data);
+    res.status(200).send({ message: 'Data saved successfully' });
 };
-
-saveData();

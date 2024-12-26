@@ -1,4 +1,5 @@
-import UserModel from "Schema.js";
+import UserModel from "../Schema/Schema.js";
+
 
 
 

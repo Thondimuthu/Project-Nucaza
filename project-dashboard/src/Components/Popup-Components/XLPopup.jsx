@@ -3,8 +3,7 @@ import { AddIcon, ThreeDotIcon, WhiteboardIcon } from '../../Icons/Icons';
 import { NavLink } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { TfiImport } from 'react-icons/tfi';
-
-
+import axios from 'axios'
 
 
 
@@ -27,6 +26,7 @@ function Xlpopup() {
         setIsShowPopup(!isShowPopup);
     };
 
+    /// Uploading in excelsheet part
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -41,20 +41,20 @@ function Xlpopup() {
                     acc[sheetName] = data;
                     return acc;
                 }, {});
-
                 setExcelData(sheetsData);
                 setSelectedSheet(wb.SheetNames[0]);
             };
             reader.readAsArrayBuffer(file);
         }
     };
-
     const handleCellChange = (e, rowIndex, colIndex) => {
         const updatedData = { ...excelData };
         updatedData[selectedSheet][rowIndex][colIndex] = e.target.value;
         setExcelData(updatedData);
     };
 
+
+    //Table Row adding part
     const handleAddRow = () => {
         const updatedData = { ...excelData };
         const sheetData = updatedData[selectedSheet];
@@ -87,12 +87,10 @@ function Xlpopup() {
             alert('Sheet name cannot be empty!');
             return;
         }
-
         if (excelData[newSheetName]) {
             alert('A sheet with this name already exists!');
             return;
         }
-
         const newSheetData = [['Sl. No.']];
         setExcelData({
             ...excelData,
@@ -103,52 +101,46 @@ function Xlpopup() {
         setShowSheetInput(false);
     };
 
-    const exportToExcel = () => {
-        const wb = XLSX.utils.book_new();
-        Object.keys(excelData).forEach((sheetName) => {
-            const ws = XLSX.utils.aoa_to_sheet(excelData[sheetName]);
-            XLSX.utils.book_append_sheet(wb, ws, sheetName);
-        });
-        XLSX.writeFile(wb, 'exported_data.xlsx');
-    };
+
+
 
     // table adding commant
     const renderTable = () => {
         const data = excelData[selectedSheet];
         return (
             <div className="overflow-y-scroll h-40 border border-red-500 mt-3">
-    <table className="border-collapse w-full">
-        <thead>
-            <tr className="border">
-                {data[0] &&
-                    data[0].map((col, index) => (
-                        <th key={index} className="border px-4 py-2 text-left">
-                            {col}
-                        </th>
-                    ))}
-            </tr>
-        </thead>
-        <tbody className="border border-red-500">
-            {data.slice(1).map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                    {row.map((cell, cellIndex) => (
-                        <td
-                            key={`${rowIndex}-${cellIndex}`}
-                            className="border px-1"
-                        >
-                            <input
-                                type="text"
-                                value={cell || ''}
-                                onChange={(e) => handleCellChange(e, rowIndex + 1, cellIndex)}
-                                className="w-full text-xl p-2 rounded-md outline-none"
-                            />
-                        </td>
-                    ))}
-                </tr>
-            ))}
-        </tbody>
-    </table>
-</div>
+                <table className="border-collapse w-full">
+                    <thead>
+                        <tr className="border">
+                            {data[0] &&
+                                data[0].map((col, index) => (
+                                    <th key={index} className="border px-4 py-2 text-left">
+                                        {col}
+                                    </th>
+                                ))}
+                        </tr>
+                    </thead>
+                    <tbody className="border border-red-500">
+                        {data.slice(1).map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {row.map((cell, cellIndex) => (
+                                    <td
+                                        key={`${rowIndex}-${cellIndex}`}
+                                        className="border px-1"
+                                    >
+                                        <input
+                                            type="text"
+                                            value={cell || ''}
+                                            onChange={(e) => handleCellChange(e, rowIndex + 1, cellIndex)}
+                                            className="w-full text-xl p-2 rounded-md outline-none"
+                                        />
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
         );
     };
@@ -160,13 +152,37 @@ function Xlpopup() {
             alert('No sheet selected!');
             return;
         }
-
         const updatedData = { ...excelData };
         delete updatedData[selectedSheet];
-
         const remainingSheets = Object.keys(updatedData);
         setSelectedSheet(remainingSheets[0] || ''); // Select the first sheet or clear selection
         setExcelData(updatedData);
+    };
+
+
+
+    // excel sheet save button 
+  const handleSave = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/data/excelData', {
+        data: excelData[selectedSheet], // Send the data to the server
+      });
+      console.log('Response:', response);
+      alert('Data saved successfully');
+    } catch (error) {
+      console.error('Error saving data:', error);
+      alert('Error saving data');
+    }
+  };
+
+    //excel sheet download buttton part
+    const exportToExcel = () => {
+        const wb = XLSX.utils.book_new();
+        Object.keys(excelData).forEach((sheetName) => {
+            const ws = XLSX.utils.aoa_to_sheet(excelData[sheetName]);
+            XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        });
+        XLSX.writeFile(wb, 'exported_data.xlsx');
     };
 
 
@@ -221,7 +237,9 @@ function Xlpopup() {
                                             className=" border-gray-300 rounded-md pl-14 pt-3"
                                         />
                                     </div>
-                                    {/* this is New excel sheet adding part */}
+
+
+                                    {/* New excel sheet adding part */}
                                     <div className="text-center mr-10">
                                         <button
                                             onClick={() => setShowSheetInput(!showSheetInput)}
@@ -234,23 +252,23 @@ function Xlpopup() {
                                         {showSheetInput && (
                                             <div className="mt-4 flex justify-center gap-4">
                                                 <div className="">
-                                                <input
-                                                    type="text"
-                                                    value={newSheetName}
-                                                    onChange={(e) => setNewSheetName(e.target.value)}
-                                                    placeholder="Enter new sheet name"
-                                                    className=" pl-4 text-lg h-10 border border-gray-300 rounded-md outline-none border-b-2 border-t-0 border-r-0"
-                                                />
+                                                    <input
+                                                        type="text"
+                                                        value={newSheetName}
+                                                        onChange={(e) => setNewSheetName(e.target.value)}
+                                                        placeholder="Enter new sheet name"
+                                                        className=" pl-4 text-lg h-10 border border-gray-300 rounded-md outline-none border-b-2 border-t-0 border-r-0"
+                                                    />
                                                 </div>
 
 
                                                 <div className="pt-1">
-                                                <button
-                                                    onClick={handleAddSheet}
-                                                    className="bg-orange-500 py-1 px-4 text-white rounded-md hover:bg-orange-600 "
-                                                >
-                                                    Add Sheet
-                                                </button>
+                                                    <button
+                                                        onClick={handleAddSheet}
+                                                        className="bg-orange-500 py-1 px-4 text-white rounded-md hover:bg-orange-600 "
+                                                    >
+                                                        Add Sheet
+                                                    </button>
                                                 </div>
                                             </div>
                                         )}
@@ -266,7 +284,7 @@ function Xlpopup() {
                                             onClick={handleDeleteSelectedSheet}
                                             className="bg-red-500 text-white  py-1 px-4 rounded-md hover:bg-red-600"
                                         >
-                                            Delete
+                                            Delete Sheet
                                         </button>
                                     </div>
 
@@ -300,30 +318,32 @@ function Xlpopup() {
                                             key={sheetName}
                                             onClick={() => setSelectedSheet(sheetName)}
                                             className={`p-2 hover:border-gray-900  hover:shadow-md rounded-md border-x-1 ${selectedSheet === sheetName
-                                                    ? 'bg-gray-400 text-slate-50 text-xl'
-                                                    : 'bg-white text-md'
+                                                ? 'bg-gray-400 text-slate-50 text-xl'
+                                                : 'bg-white text-md'
                                                 }`}
                                         >
                                             {sheetName}
                                         </button>
                                     ))}
                                 </div>
+
+
                                 {/* added table content */}
-                                        <div className="">
-                                            {excelData[selectedSheet] && renderTable()}
-                                        </div>
+                                <div className="">
+                                    {excelData[selectedSheet] && renderTable()}
+                                </div>
 
                                 {/* this is Download  part */}
 
 
 
                                 <div className="flex justify-between gap-6 mt-4 border ">
-                                <button
-                                        // onClick={SaveToExcel}
+                                    <button
+                                        onClick={handleSave}
                                         className="bg-green-500 flex gap-2 text-white py-2 px-6 rounded-md hover:bg-green-600"
                                     >
                                         Save
-                                        
+
                                     </button>
                                     <button
                                         onClick={exportToExcel}
