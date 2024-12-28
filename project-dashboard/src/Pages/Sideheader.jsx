@@ -1,20 +1,56 @@
-import React, { useState } from 'react';
-import Profile from '../Components/Header/Profile.jsx';
+import { useState } from 'react';
 import Search from '../Components/Header/Search.jsx';
-import Note from '../Components/Header/Note.jsx';
-import Notification from '../Components/Header/Notification.jsx';
+import { Favurate, Notepen, ProfileIcon } from '../Icons/Icons.jsx';
+import { Link } from 'react-router-dom';
+import { Acount, Download, Help, KeyBoard, Logout, Notification, Referrals, Settings, Theme, Trash } from '../Icons/Profilesicons.jsx';
 
 function NavHeader() {
+    const [activeItemId, setActiveItemId] = useState(null);
+
+    const [open, setOpen] = useState(false);
 
     // Define a list of action items
     const actionItems = [
-        { id: 1, component: <Note/> },
-        { id: 2, component: <Notification /> },
-        { id: 3, component: <Profile /> },
+        { id: 1, icons: <Notepen /> },
+        { id: 2, icons: <Favurate /> },
+        { id: 3, icons: <ProfileIcon /> },
     ];
+
     const handleOpenItem = (id) => {
         setActiveItemId(id === activeItemId ? null : id);
-    }
+        if (id === 3) {
+            setOpen(!open);
+        }
+    };
+
+    const menuItems = [
+        {
+            section: 'main',
+            items: [
+                { icon: <Acount />, label: 'Profile' },
+                { icon: <Theme />, label: 'Theme' },
+                { icon: <Settings />, label: 'Settings' },
+                { icon: <Notification />, label: 'Notification Settings' }
+            ]
+        },
+        {
+            section: 'secondary',
+            items: [
+                { icon: <KeyBoard />, label: 'Keyboard Shortcuts' },
+                { icon: <Download />, label: 'Download App' },
+                { icon: <Referrals />, label: 'Referrals' },
+                { icon: <Help />, label: 'Help' }
+            ]
+        },
+        {
+            section: 'danger',
+            items: [
+                { icon: <Trash />, label: 'Trash' },
+                { icon: <Logout />, label: 'Logout' }
+            ]
+        }
+    ];
+
     return (
         <nav className="bg-indigo-800 h-16 p-3 shadow-sm flex flex-wrap justify-between items-center">
             {/* Logo Section */}
@@ -33,8 +69,66 @@ function NavHeader() {
             {/* Search and Action Items */}
             <div className="flex items-center">
                 <div className='mr-28'><Search/></div>
+
+                {/* Action Items */}
                 {actionItems.map((item) => (
-                    <button  className='ml-5' key={item.id} onClick={handleOpenItem}>{item.component}</button>
+                    <div key={item.id} className="border space-x-5">
+                        <button 
+                            className='ml-5'
+                            onClick={() => handleOpenItem(item.id)}
+                        >
+                            {item.icons}
+                        </button>
+                        {/* Action Items */}
+                        {activeItemId === item.id && (
+                            <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 z-10">
+                                {item.id === 1 && (
+                                    <div className="origin-top-right absolute right-0 mr-52 w-96 h-96 shadow-lg bg-white ring-1 ring-opacity-5 divide-y divide-gray-800">
+                                        <div className="p-4">
+                                            <h1 className="text-lg font-bold">NOTE</h1>
+                                            <p>This is the content inside the notification popup.</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {item.id === 2 && (
+                                    <div className="origin-top-right absolute right-0 mr-52 w-96 h-96 shadow-lg bg-white ring-1 ring-opacity-5 divide-y divide-gray-800">
+                                        <div className="p-4">
+                                            <h1 className="text-lg font-bold">NOTIFICATION</h1>
+                                            <p>This is the content inside the notification popup.</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {item.id === 3 && (
+                                    <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                                        <div>
+                                            <div className="border border-t-0 border-r-0 border-l-0 m-4 pb-5">
+                                                <h1>Profile image</h1>
+                                            </div>
+                                            
+                                            {menuItems.map((section) => (
+                                                <div key={section.section} className={`${section.section !== 'danger' ? 'border border-t-0 border-r-0 border-l-0' : ''} m-4`}>
+                                                    {section.items.map((menuItem, itemIndex) => (
+                                                        <Link
+                                                            key={itemIndex}
+                                                            to="#"
+                                                            className={`block px-4 py-2 text-sm ${section.section === 'danger' ? 'text-red-600 hover:text-red-900' : 'text-gray-700'} hover:bg-gray-100`}
+                                                            role="menuitem"
+                                                        >
+                                                            <div className="flex gap-2 items-center">
+                                                                {menuItem.icon}
+                                                                <span className="text-base font-bold">{menuItem.label}</span>
+                                                            </div>
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 ))}
             </div>
         </nav>
