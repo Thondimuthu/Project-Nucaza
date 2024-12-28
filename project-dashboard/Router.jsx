@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DropdownButton from './src/Components/Header/Profile.jsx';
+// import DropdownButton from './src/Components/Header/Profile.jsx';
+import Sideheader from './src/Pages/Sideheader.jsx';
 import StandardLayout from './src/Layout/StandardLayout.jsx';
 import Home from './src/Components/Content/Home.jsx'
 import Inbox from './src/Components/Content/Inbox.jsx'
@@ -25,7 +26,8 @@ function Router() {
     { path: '/clips', element: <Clips /> },
     { path: '/timesheets', element: <Timesheet /> },
     { path: '/everythink', element: <Everythink /> },
-    {path:'/profile', element:<DropdownButton/>},
+    // {path:'/profile', element:<DropdownButton/>},
+    {path:'/sideheader', element:<Sideheader/>},
   ];
   
   return (

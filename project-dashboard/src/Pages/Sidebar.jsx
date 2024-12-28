@@ -31,32 +31,35 @@ const sidebarLinks = [
   { to: '/inbox', label: 'Inbox', icon: <Inboxicon /> },
 
   { to: '/everythink', label: 'Everything', icon: < EverythinkIcon/>},
-  { to: '#', label: 'Team Space', icon: <TeamspaceIcon /> },
+  { to: '#', label: 'Tmeam Space', icon: <TeamspaceIcon /> },
   { to: '#', label: 'View All Spaces', icon: <AllspaceIcon /> },
   { to: '#', label: 'Create Space', icon: <CreatespaceIcon /> },
 ];
 
 const Sidebar = () => { 
   return (
-    <div className="border border-gray-200  w-96 max-h-screen overflow-y-auto mt-2 rounded-lg shadow-md">
-      <div className="flex flex-col p-2">
+    <div className="lg:border lg:border-gray-200  lg:w-96 lg:max-h-screen lg:overflow-y-auto lg:mt-2 lg:rounded-lg lg:shadow-md
+                    md:border md:border-gray-200  md:w-96 md:max-h-screen md:overflow-y-auto md:mt-2 md:rounded-lg md:shadow-md">
+      <div className="lg:flex lg:flex-col lg:p-2">
 
-        <div className="border border-b-2 border-t-0 border-l-0 border-r-0">
+        <div className="lg:border lg:border-b-2 lg:border-t-0 lg:border-l-0 lg:border-r-0
+        md:border md:border-b-2 md:border-t-0 md:border-l-0 md:border-r-0">
           { sidebarLinks.slice(0, 2).map((item, index) => (
             <NavLink
             
               key={index}
               to={item.to}
               className={`flex ${
-                item.hasExtraIcons ? 'justify-between' : 'items-center'
-              } p-2 m-1 hover:shadow-md hover:text-blue-600 rounded-md transition-all duration-300 ease-in-out group`}
+                item.hasExtraIcons ? 'lg:justify-between md:justify-between' : 'lg:items-center md:items-center'
+              } lg:p-2 lg:m-1 lg:hover:shadow-md lg:hover:text-blue-600 lg:rounded-md lg:transition-all lg:duration-300 lg:ease-in-out lg:group
+              md:p-2 md:m-1 md:hover:shadow-md md:hover:text-blue-600 md:rounded-md md:transition-all md:duration-300 md:ease-in-out md:group`}
             >
-              <div className="flex">
+              <div className="lg:flex md:flex">
                 {item.icon}
-                <span className="font-semibold fon ml-4">{item.label}</span>
+                <span className="lg:font-semibold lg:font-mono lg:ml-4 md:font-semibold md:font-mono md:ml-4">{item.label}</span>
               </div>
               {item.hasExtraIcons && (
-                <div className="flex gap-4 pr-3 invisible group-hover:visible">
+                <div className="lg:flex lg:gap-4 lg:pr-3 lg:invisible lg:group-hover:visible md:flex md:gap-4 md:pr-3 md:invisible md:group-hover:visible ">
                   <ThreeDotIcon />
                   <AddIcon />
                 </div>
@@ -78,25 +81,28 @@ const Sidebar = () => {
             <Link
               key={index}
               to={item.to}
-              className="flex items-center p-2 m-1 hover:shadow-md hover:text-blue-600 rounded-md transition-all duration-300 ease-in-out group"
+              className="lg:flex lg:items-center lg:p-2 lg:m-1 lg:hover:shadow-md lg:hover:text-blue-600 lg:rounded-md lg:transition-all lg:duration-300 lg:ease-in-out lg:group
+              md:flex md:items-center md:p-2 md:m-1 md:hover:shadow-md md:hover:text-blue-600 md:rounded-md md:transition-all md:duration-300 md:ease-in-out md:group"
             >
               {item.icon}
-              <span className="font-semibold fon ml-4">{item.label}</span>
+              <span className="lg:font-semibold lg:font-mono lg:ml-4 md:font-semibold md:font-mono md:ml-4">{item.label}</span>
             </Link>
           ))}
         </div>
 
-        <div className="border-t my-4"></div>
-        <div className="flex justify-between space-x-2 p-2">
+        <div className="lg:border-t lg:my-4 md:border-t md:my-4"></div>
+        <div className="lg:flex lg:justify-between lg:space-x-2 lg:p-2 md:flex md:justify-between md:space-x-2 md:p-2">
           <button
-            className="shadow flex items-center justify-center border border-green-500 text-green-600 w-28 py-2 rounded-md hover:bg-green-50 transition-all duration-300 ease-in-out"
+            className="lg:shadow lg:flex lg:items-center lg:justify-center lg:border lg:border-green-500 lg:text-green-600 lg:w-28 lg:py-2 lg:rounded-md lg:hover:bg-green-50 lg:transition-all lg:duration-300 lg:ease-in-out 
+                      md:shadow md:flex md:items-center md:justify-center md:border md:border-green-500 md:text-green-600 md:w-28 md:py-2 md:rounded-md md:hover:bg-green-50 md:transition-all md:duration-300 md:ease-in-out"
           >
-            <UserPlusIcon className="mr-2" /> Invite
+            <UserPlusIcon className="lg:mr-2 md:mr-2" /> Invite
           </button>
           <button
-            className="flex items-center justify-center border border-blue-500 text-blue-600 w-28 py-2 rounded-md hover:bg-blue-50 transition-all duration-300 ease-in-out"
+            className="lg:flex lg:items-center lg:justify-center lg:border lg:border-blue-500 lg:text-blue-600 lg:w-28 lg:py-2 lg:rounded-md lg:hover:bg-blue-50 lg:transition-all lg:duration-300 lg:ease-in-out 
+                      md:flex md:items-center md:justify-center md:border md:border-blue-500 md:text-blue-600 md:w-28 md:py-2 md:rounded-md md:hover:bg-blue-50 md:transition-all md:duration-300 md:ease-in-out"
           >
-            <HelpCircleIcon className="mr-2" /> Help
+            <HelpCircleIcon className="lg:mr-2 md:mr-2" /> Help
           </button>
         </div>
       </div>

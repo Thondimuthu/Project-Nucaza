@@ -22,11 +22,7 @@ function Notification() {
                 </div>
 
                 {open && ( // Conditionally render the popup
-                    <div className="origin-top-right absolute right-0 mr-52 w-96 h-96 shadow-lg bg-white ring-1 ring-opacity-5 divide-y divide-gray-800">
-                        <div className="p-4">
-                            <h1 className="text-lg font-bold">Notification</h1>
-                            <p>This is the content inside the notification popup.</p>
-                        </div>
+                    
                     </div>
                 )}
             </div>
