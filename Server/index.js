@@ -1,23 +1,33 @@
-import express from 'express'
-import router from './Router.js';
-import cors from 'cors'
-import ConnectData from './db.Config/db.config.js';
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./db.Config/db.config.js";
+import morgan from "morgan";
+import cors from "cors";
+import Routes from './Router.js';
 
 
-const app=express();
-const port =3000;
-const DBURL='mongodb://localhost:27017/Employee'
+dotenv.config();
 
-app.use(cors())
-app.use(express.json())
-app.use('api/v1/data',router)
+connectDB();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(morgan("dev"));
+  
+
+app.use('/api/v1', Routes);
+
+app.get('/', (req, res) => {
+  res.send("<h1>Welcome </h1>");
+});
 
 
 
+const PORT = process.env.PORT || 8081;
 
-ConnectData(DBURL).then(()=>{
-    app.listen(port, ()=>console.log(`connecting http://localhost:${port}`)
-    )}).catch(()=>{
-    console.log("Error Problem");
-    
-})
+
+app.listen(PORT, () => {
+  console.log(`Server Running on port ${PORT}`);
+});

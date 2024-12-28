@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import excelSchema from '../Schema/E-shema.js';
+import excelSchema from '../Schema/ExlSchema.js';
 
 
 export async function saveData(req, res) {
