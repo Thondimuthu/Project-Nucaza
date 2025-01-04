@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { AddIcon, ThreeDotIcon, WhiteboardIcon } from '../../Icons/Icons';
 import { NavLink } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { TfiImport } from 'react-icons/tfi';
+import { RiFileExcel2Line } from "react-icons/ri";
+import { AddIcon, ThreeDotIcon, WhiteboardIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
+
+
+
+
 
 function XLPopup() {
     const [isShowPopup, setIsShowPopup] = useState(false);
@@ -157,7 +162,7 @@ function XLPopup() {
 
         const data = excelData[selectedSheet];
         return (
-            <div className="overflow-y-scroll h-40 border border-red-500 mt-3">
+            <div className="overflow-y-scroll h-40 border mt-3">
                 <table className="border-collapse w-full">
                     <thead>
                         <tr className="border">
@@ -169,7 +174,7 @@ function XLPopup() {
                                 ))}
                         </tr>
                     </thead>
-                    <tbody className="border border-red-500">
+                    <tbody className="border">
                         {data.slice(1).map((row, rowIndex) => (
                             <tr key={rowIndex}>
                                 {row.map((cell, cellIndex) => (
@@ -217,6 +222,7 @@ function XLPopup() {
             alert('No data to save');
             return;
         }
+        
 
         try {
             const response = await fetch('http://localhost:8080/api/v1/excelData', {
@@ -250,7 +256,7 @@ function XLPopup() {
                 className="flex justify-between items-center p-2 m-1 hover:shadow-md hover:text-blue-600 rounded-md transition-all duration-300 ease-in-out group"
             >
                 <div className="flex">
-                    <WhiteboardIcon />
+                    <RiFileExcel2Line className="text-2xl" />
                     <span className="font-semibold ml-4">XL Sheets</span>
                 </div>
                 <div className="flex gap-4 pr-3 invisible group-hover:visible">
@@ -340,7 +346,7 @@ function XLPopup() {
                                             value={newColumnTitle}
                                             onChange={(e) => setNewColumnTitle(e.target.value)}
                                             placeholder="Enter new column title"
-                                            className="p-1 text-lg border border-gray-300 rounded-md mr-5 border-b-2 border-t-0 border-r-0"
+                                            className="p-1 pl-3 outline-none text-lg border border-gray-300 rounded-md mr-5 border-b-2 border-t-0 border-r-0"
                                         />
                                         <button
                                             onClick={handleAddColumn}
@@ -357,12 +363,12 @@ function XLPopup() {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-center mt-2 gap-4">
+                                <div className="flex justify-center gap-4 h-10 mt-3">
                                     {Object.keys(excelData).map((sheetName) => (
                                         <button
                                             key={sheetName}
                                             onClick={() => setSelectedSheet(sheetName)}
-                                            className={`p-2 hover:border-gray-900 hover:shadow-md rounded-md border-x-1 ${
+                                            className={`pl-2 pr-2 hover:border-gray-900 hover:shadow-md rounded-md border-x-1 ${
                                                 selectedSheet === sheetName
                                                     ? 'bg-gray-400 text-slate-50 text-xl'
                                                     : 'bg-white text-md'
@@ -377,7 +383,7 @@ function XLPopup() {
                                     {renderTable()}
                                 </div>
 
-                                <div className="flex justify-between gap-6 mt-4 border">
+                                <div className="flex justify-between gap-6 mt-4">
                                     <button
                                         onClick={handleSave}
                                         className="bg-green-500 flex gap-2 text-white py-2 px-6 rounded-md hover:bg-green-600"

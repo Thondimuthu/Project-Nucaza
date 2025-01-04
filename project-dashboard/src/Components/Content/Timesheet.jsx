@@ -1,10 +1,10 @@
-import React from 'react'
-import { SettingIcon, TimesheetsIcon } from '../../Icons/Icons.jsx'
 import StandardLayout from '../../Layout/StandardLayout.jsx'
+import { SettingIcon, TimeSheetIcon } from '../../assets/SVGImage/SideBar/Icons.jsx'
 
 
 
-function Timesheet() {
+function TimeSheet() {
+
   return (
     <>
         <StandardLayout>
@@ -13,8 +13,8 @@ function Timesheet() {
                         {/* header content */}
                         <div className="bg-white flex justify-between border border-gray-100 h-12 pt-2 pl-3 shadow-md">
                             <div className="flex ">
-                                <TimesheetsIcon />
-                                <span className='mt-1 ml-2 font-bold'>Timesheets</span>
+                                <TimeSheetIcon />
+                                <span className='mt-1 ml-2 font-bold'>TimeSheets</span>
                             </div>
                             <div className="mr-2 flex ">
                                 <div className="flex rounded-lg items-center mb-1 bg-gray-800 pl-3 text-slate-100">
@@ -29,4 +29,4 @@ function Timesheet() {
   )
 }
 
-export default Timesheet
+export default TimeSheet

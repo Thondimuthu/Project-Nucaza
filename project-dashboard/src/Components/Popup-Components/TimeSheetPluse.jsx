@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AddIcon, ThreeDotIcon, TimesheetsIcon } from '../../Icons/Icons.jsx';
+import { AddIcon, ThreeDotIcon, TimeSheetIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
+
 
 
 function TimeSheet() {
@@ -12,9 +13,9 @@ function TimeSheet() {
     };
 
     // Array for popup options
-    const popupOptions = [
+    // const popupOptions = [
     
-    ];
+    // ];
 
     return (
         <div>
@@ -23,7 +24,7 @@ function TimeSheet() {
                 className="flex justify-between items-center p-2 m-1 hover:shadow-md hover:text-blue-600 rounded-md transition-all duration-300 ease-in-out group"
             >
                 <div className="flex">
-                    <TimesheetsIcon />
+                    <TimeSheetIcon />
                     <span className="font-semibold ml-4">TimeSheets</span>
                 </div>
                 <div className="flex gap-4 pr-3 invisible group-hover:visible">
@@ -39,7 +40,7 @@ function TimeSheet() {
                     <div className="bg-white w-4/5 h-3/4 p-5 rounded-lg relative ">
                         <div className="border border-t-0 border-l-0 border-r-0 flex justify-between items-center pb-3">
                             <span className='flex gap-2 items-center'>
-                                <TimesheetsIcon />
+                                <TimeSheetIcon />
                                 <span className='font-bold'>TimeSheets</span>
                             </span>
                             <div className="flex items-center gap-6">

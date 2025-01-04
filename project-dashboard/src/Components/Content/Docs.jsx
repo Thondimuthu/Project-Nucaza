@@ -1,5 +1,5 @@
-import React from 'react'
-import { DocsIcon, SearchIcon } from '../../Icons/Icons.jsx'
+import { DocsIcon} from '../../assets/SVGImage/SideBar/Icons.jsx'
+import { SearchIcon } from '../../assets/SVGImage/Header/Icons.jsx'
 import StandardLayout from '../../Layout/StandardLayout.jsx'
 
 

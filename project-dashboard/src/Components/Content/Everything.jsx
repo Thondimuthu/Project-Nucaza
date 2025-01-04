@@ -1,8 +1,7 @@
-import React from 'react'
 import StandardLayout from '../../Layout/StandardLayout'
 
 
-function Everythink() {
+function Everything() {
   return (
     <>
         <StandardLayout>
@@ -20,4 +19,4 @@ function Everythink() {
   )
 }
 
-export default Everythink
+export default Everything

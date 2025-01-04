@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { MicOff, System } from '../../Icons/ClipsIcons.jsx';
-import { AddIcon, ThreeDotIcon, WhiteboardIcon } from '../../Icons/Icons.jsx';
 import { NavLink } from 'react-router-dom';
+import { AddIcon, MicIcon, SystemIcon, ThreeDotIcon, WhiteboardIcon } from '../../assets/SVGImage/Header/Icons.jsx';  
+
 
 function WhiteboardsPlus() {
   const [isShowPopup, setIsShowPopup] = useState(false);
@@ -12,8 +12,8 @@ function WhiteboardsPlus() {
 
   // Array for popup options
   const popupOptions = [
-    { icon: <MicOff />, label: 'No Microphone' },
-    { icon: <System />, label: 'Full Screen' },
+    { icon: <MicIcon />, label: 'No Microphone' },
+    { icon: <SystemIcon />, label: 'Full Screen' },
   ];
 
   return (

@@ -1,24 +1,12 @@
-
-import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AddIcon, DocsIcon, ThreeDotIcon } from '../../Icons/Icons.jsx';
-import {
-  Ai,
-  Image,
-  Link,
-  Message,
-  Settin,
-  Share,
-  Star,
-  Sticres,
-  ThreeDot,
-  Verify,
-} from '../../Icons/DocsIcons.jsx';
+import { LinkIcon, AiIcon, VerifyIcon, StickersIcon, ImageIcon, SettingIcon } from '../../assets/SVGImage/SideBar/PopupIcon/DocsIcons.jsx';
+import { DocsIcon, ThreeDotIcon, AddIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
+import { useState } from 'react';
+import { ShareIcon, StarIcon, MessageIcon} from '../../assets/SVGImage/SideBar/PopupIcon/DocsIcons.jsx';
 
 
 
-
-function DacsPluse() {
+function DocsPluse() {
   const [isShowPopup, setIsShowPopup] = useState(false);
 
   const handleTogglePopup = () => {
@@ -27,12 +15,12 @@ function DacsPluse() {
 
   // Array for popup options
   const popupOptions = [
-    { icon: <Link />, label: 'Link to task or Desk' },
-    { icon: <Ai />, label: 'Ash Ai' },
-    { icon: <Verify />, label: 'Mark Wiki' },
-    { icon: <Sticres />, label: 'Add Icon' },
-    { icon: <Image />, label: 'Add Cover' },
-    { icon: <Settin />, label: 'Settings' },
+    { icon: <LinkIcon />, label: 'Link to task or Desk' },
+    { icon: <AiIcon />, label: 'Ash Ai' },
+    { icon: <VerifyIcon />, label: 'Mark Wiki' },
+    { icon: <StickersIcon />, label: 'Add Icon' },
+    { icon: <ImageIcon />, label: 'Add Cover' },
+    { icon: <SettingIcon />, label: 'Settings' },
   ];
 
   return (
@@ -62,10 +50,10 @@ function DacsPluse() {
                 <span className='font-bold'>Create Docs</span>
               </span>
               <div className="flex items-center gap-6"> 
-                <Share />
-                <Star />
-                <Message />
-                <ThreeDot />
+                <ShareIcon />
+                <StarIcon />
+                <MessageIcon />
+                <ThreeDotIcon />
                 <button
                   className="border rounded-lg w-14 h-10 text-gray-600 text-lg hover:bg-red-600 hover:text-white"
                   onClick={handleTogglePopup}
@@ -111,4 +99,4 @@ function DacsPluse() {
   );
 }
 
-export default DacsPluse;
+export default DocsPluse;

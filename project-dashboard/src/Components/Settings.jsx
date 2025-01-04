@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {SettingIcon } from '../Icons/Icons.jsx';
+import{ useState } from 'react';
+import {SettingIcon } from '../assets/SVGImage/SideBar/Icons.jsx'; 
 
 const Settings = () => {
     const [isOpen, setIsOpen] = useState(false);

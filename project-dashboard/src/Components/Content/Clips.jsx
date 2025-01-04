@@ -1,5 +1,4 @@
-import React from 'react'
-import { ClipIcon} from '../../Icons/Icons.jsx'
+import { ClipIcon} from '../../assets/SVGImage/SideBar/Icons.jsx'
 import StandardLayout from '../../Layout/StandardLayout.jsx'
 
 
