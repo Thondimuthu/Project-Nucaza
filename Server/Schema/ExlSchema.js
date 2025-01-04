@@ -25,8 +25,8 @@ const ExcelSchema = new Schema({
 });
 
 // Create the model
-const ExcelModel = mongoose.model('Excel', ExcelSchema);
+const ExcelModel = mongoose.model('excel', ExcelSchema);
 
-export default ExcelModel;
+export default ExcelModel;  
 
 
