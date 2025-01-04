@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Favurate } from '../../Icons/Icons.jsx';
+import { Favorite } from '../../Icons/Icons.jsx';
 
 function Notification() {
     const [open, setOpen] = useState(false); // State to handle popup visibility
@@ -17,14 +17,10 @@ function Notification() {
                         className="h-10 w-10"
                         onClick={togglePopup} // Toggle the popup on button click
                     >
-                        <Favurate />
+                        <Favorite />
                     </button>
                 </div>
 
-                {open && ( // Conditionally render the popup
-                    
-                    </div>
-                )}
             </div>
         </>
     );

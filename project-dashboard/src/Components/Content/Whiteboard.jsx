@@ -1,6 +1,9 @@
-import React from 'react'
-import { SearchIcon, WhiteboardIcon } from '../../Icons/Icons.jsx'
+import { SearchIcon} from '../../assets/SVGImage/Header/Icons.jsx'
+import { WhiteboardIcon } from '../../assets/SVGImage/SideBar/Icons.jsx'
 import StandardLayout from '../../Layout/StandardLayout.jsx'
+
+
+
 
 function Whiteboard() {
     return (

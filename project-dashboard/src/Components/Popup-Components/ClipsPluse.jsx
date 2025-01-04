@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AddIcon, ClipIcon, ThreeDotIcon } from '../../Icons/Icons.jsx';
-import { MicOff, System } from '../../Icons/ClipsIcons.jsx';
+import { MicIcon, SystemIcon } from '../../assets/SVGImage/SideBar/PopupIcon/ClipsIcons.jsx';
+import { AddIcon, ThreeDotIcon, ClipIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
+
+
 
 function ClipsPlus() {
   const [isShowPopup, setIsShowPopup] = useState(false);
@@ -12,8 +14,8 @@ function ClipsPlus() {
 
   // Array for popup options
   const popupOptions = [
-    { icon: <MicOff />, label: 'No Microphone' },
-    { icon: <System />, label: 'Full Screen' },
+    { icon: <MicIcon />, label: 'No Microphone' },
+    { icon: <SystemIcon />, label: 'Full Screen' },
   ];
 
   return (

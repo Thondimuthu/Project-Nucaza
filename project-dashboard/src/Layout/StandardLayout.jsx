@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../Pages/Sidebar.jsx';
-import NavHeader from '../Pages/Sideheader.jsx';
+import NavHeader from '../Pages/Header.jsx';
 
 function StandardLayout({ children }) {
     return (

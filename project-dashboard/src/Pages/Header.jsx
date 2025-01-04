@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import Search from '../Components/Header/Search.jsx';
-import { Favurate, Notepen, ProfileIcon } from '../Icons/Icons.jsx';
 import { Link } from 'react-router-dom';
-import { Acount, Download, Help, KeyBoard, Logout, Notification, Referrals, Settings, Theme, Trash } from '../Icons/Profilesicons.jsx';
+import ProfileImage from '../Components/ProfileImageSet.jsx';
+import { NoteIcon, FavoriteIcon, ProfileIcon, SearchIcon } from '../assets/SVGImage/Header/Icons.jsx';
+import { AccountIcon, DownloadIcon, HelpIcon, KeyBoardIcon, LogoutIcon, NotificationIcon, ReferralsIcon, SettingsIcon, ThemeIcon, TrashIcon } from '../assets/SVGImage/Header/Profile.jsx';
 
-function NavHeader() {
+
+
+
+
+
+function Header() {
     const [activeItemId, setActiveItemId] = useState(null);
 
     const [open, setOpen] = useState(false);
 
     // Define a list of action items
     const actionItems = [
-        { id: 1, icons: <Notepen /> },
-        { id: 2, icons: <Favurate /> },
+        { id: 1, icons: <NoteIcon /> },
+        { id: 2, icons: <FavoriteIcon /> },
         { id: 3, icons: <ProfileIcon /> },
     ];
 
@@ -27,36 +32,36 @@ function NavHeader() {
         {
             section: 'main',
             items: [
-                { icon: <Acount />, label: 'Profile' },
-                { icon: <Theme />, label: 'Theme' },
-                { icon: <Settings />, label: 'Settings' },
-                { icon: <Notification />, label: 'Notification Settings' }
+                { icon: <AccountIcon />, label: 'Profile' },
+                { icon: <ThemeIcon />, label: 'Theme' },
+                { icon: <SettingsIcon />, label: 'Settings' },
+                { icon: <NotificationIcon />, label: 'Notification Settings' }
             ]
         },
         {
             section: 'secondary',
             items: [
-                { icon: <KeyBoard />, label: 'Keyboard Shortcuts' },
-                { icon: <Download />, label: 'Download App' },
-                { icon: <Referrals />, label: 'Referrals' },
-                { icon: <Help />, label: 'Help' }
+                { icon: <KeyBoardIcon />, label: 'Keyboard Shortcuts' },
+                { icon: <DownloadIcon />, label: 'Download App' },
+                { icon: <ReferralsIcon />, label: 'Referrals' },
+                { icon: <HelpIcon />, label: 'Help' }
             ]
         },
         {
             section: 'danger',
             items: [
-                { icon: <Trash />, label: 'Trash' },
-                { icon: <Logout />, label: 'Logout' }
+                { icon: <TrashIcon />, label: 'Trash' },
+                { icon: <LogoutIcon />, label: 'Logout' }
             ]
         }
     ];
 
     return (
-        <nav className="bg-indigo-800 h-16 p-3 shadow-sm flex flex-wrap justify-between items-center">
+        <nav className="lg:bg-indigo-800 lg:h-16 lg:p-3 lg:shadow-sm lg:flex lg:flex-wrap lg:justify-between lg:items-center md:bg-red-700 md:h-16 md:p-3 md:shadow-sm md:flex md:flex-wrap md:justify-between md:items-center">
             {/* Logo Section */}
-            <div className="flex items-center space-x-4 ml-4">
+            <div className="lg:flex lg:items-center lg:space-x-4 lg:ml-4 md:flex md:items-center md:space-x-4 md:ml-4">
                 <svg
-                    className="h-10 w-10 text-gray-100"
+                    className="lg:h-10 lg:w-10 lg:text-gray-100 md:h-10 md:w-10 md:text-gray-100"
                     stroke="currentColor"
                     fill="currentColor"
                     strokeWidth="0"
@@ -67,23 +72,26 @@ function NavHeader() {
                 </svg>
             </div>
             {/* Search and Action Items */}
-            <div className="flex items-center">
-                <div className='mr-28'><Search/></div>
+            <div className="lg:flex lg:items-center lg:justify-around md:flex md:items-center md:justify-around">
+                <div className='lg:mr-20 md:mr-10'><SearchIcon /></div>
 
+                
                 {/* Action Items */}
                 {actionItems.map((item) => (
-                    <div key={item.id} className="border space-x-5">
-                        <button 
-                            className='ml-5'
+                    <div key={item.id} className="lg:mr-6 md:mr-4">
+                        <button
+                            className=''
                             onClick={() => handleOpenItem(item.id)}
                         >
                             {item.icons}
                         </button>
+
                         {/* Action Items */}
                         {activeItemId === item.id && (
-                            <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 z-10">
+                            <div className="lg:absolute lg:right-0 lg:mt-2 lg:w-48 lg:rounded-md lg:shadow-lg lg:py-1 lg:z-10 md:absolute md:right-0 md:mt-2 md:w-48 md:rounded-md md:shadow-lg md:py-1 md:z-10 md">
+
                                 {item.id === 1 && (
-                                    <div className="origin-top-right absolute right-0 mr-52 w-96 h-96 shadow-lg bg-white ring-1 ring-opacity-5 divide-y divide-gray-800">
+                                    <div className="lg:origin-top-right lg:absolute lg:right-0 lg:mr-52 lg:w-96 lg:h-96 lg:shadow-lg lg:bg-white lg:ring-1 lg:ring-opacity-5 lg:divide-y lg:divide-gray-800    md:origin-top-right md:absolute md:right-0 md:mr-32 md:w-60 md:h-72 md:shadow-lg md:bg-white md:ring-1 md:ring-opacity-5 md:divide-y md:divide-gray-800">
                                         <div className="p-4">
                                             <h1 className="text-lg font-bold">NOTE</h1>
                                             <p>This is the content inside the notification popup.</p>
@@ -92,27 +100,28 @@ function NavHeader() {
                                 )}
 
                                 {item.id === 2 && (
-                                    <div className="origin-top-right absolute right-0 mr-52 w-96 h-96 shadow-lg bg-white ring-1 ring-opacity-5 divide-y divide-gray-800">
-                                        <div className="p-4">
-                                            <h1 className="text-lg font-bold">NOTIFICATION</h1>
+                                    <div className="lg:origin-top-right lg:absolute lg:right-0 lg:mr-32 lg:w-96 lg:h-96 lg:shadow-lg lg:bg-white lg:ring-1 lg:ring-opacity-5 lg:divide-y lg:divide-gray-800 md:origin-top-right md:absolute md:right-0 md:mr-24 md:w-60 md:h-72 md:shadow-lg md:bg-white md:ring-1 md:ring-opacity-5 md:divide-y md:divide-gray-800">
+                                        <div className="lg:p-4 md:p-4">
+                                            <h1 className="lg:text-lg md:text-lg font-bold">NOTIFICATION</h1>
                                             <p>This is the content inside the notification popup.</p>
                                         </div>
                                     </div>
                                 )}
                                 {item.id === 3 && (
-                                    <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                                    <div className="border border-red-700 lg:origin-top-right lg:absolute lg:right-0 lg:mr-14 lg:mt-2 lg:w-80 lg:rounded-md lg:shadow-lg lg:bg-white lg:ring-1 lg:ring-black lg:ring-opacity-5 lg:divide-y lg:divide-gray-100        
+                                                     md:origin-top-right md:absolute md:right-0 md:mr-12 md:w-60 md:rounded-md md:shadow-lg md:bg-white md:ring-1 md:ring-black md:ring-opacity-5 md:divide-y md:divide-gray-100">
                                         <div>
-                                            <div className="border border-t-0 border-r-0 border-l-0 m-4 pb-5">
-                                                <h1>Profile image</h1>
+                                            <div className="lg:border lg:border-t-0 lg:border-r-0 lg:border-l-0    md:border md:border-t-0 md:border-r-0 md:border-l-0">
+                                                <h1><ProfileImage /></h1>
                                             </div>
-                                            
+
                                             {menuItems.map((section) => (
-                                                <div key={section.section} className={`${section.section !== 'danger' ? 'border border-t-0 border-r-0 border-l-0' : ''} m-4`}>
+                                                <div key={section.section} className={`${section.section !== 'danger' ? 'border border-t-0 border-r-0 border-l-0' : ''} lg:m-4 md:m-1`}>
                                                     {section.items.map((menuItem, itemIndex) => (
                                                         <Link
                                                             key={itemIndex}
-                                                            to="#"
-                                                            className={`block px-4 py-2 text-sm ${section.section === 'danger' ? 'text-red-600 hover:text-red-900' : 'text-gray-700'} hover:bg-gray-100`}
+                                                            to="/profile"
+                                                            className={`block px-4 py-2 text-sm ${section.section === 'danger' ? 'lg:text-blue-600 lg:hover:text-blue-900 md:text-red-600 md:hover:text-red-900' : 'lg:text-gray-700 lg:hover:bg-gray-100 md:text-gray-700 md:hover:bg-gray-100'}`}
                                                             role="menuitem"
                                                         >
                                                             <div className="flex gap-2 items-center">
@@ -135,4 +144,4 @@ function NavHeader() {
     );
 }
 
-export default NavHeader;
+export default Header;

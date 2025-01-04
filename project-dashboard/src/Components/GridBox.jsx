@@ -1,8 +1,6 @@
-import React from 'react';
-import { Homeicon } from '../Icons/Icons.jsx';
+import { HomeIcon } from '../Icons/Icons.jsx';
 import ManageButton from './ManageButton.jsx';
 import Settings from './Settings.jsx';
-
 function GridBox() {
     return (
         <div className="mt-2 m-5 w-screen max-h-screen overflow-y-auto border border-green-900">
@@ -10,7 +8,7 @@ function GridBox() {
             {/* header content */}
             <div className="flex justify-between border border-gray-100 h-12 pt-2 pl-3 shadow-md">
                 <div className="flex ">
-                    <Homeicon />
+                    <HomeIcon />
                     <span className='mt-1 ml-2 font-bold'>Home</span>
                 </div>
                 <div className="mr-7 flex">
@@ -23,7 +21,7 @@ function GridBox() {
             <div className="grid grid-cols-2 m-3 gap-4  ">
 
                 <div className="ml-8 w-[390px] pl-5 pt-5 h-72  rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out  text-gray-500">
-                    <label className='text-xl font-bold '>Recents</label>
+                    <label className='text-xl font-bold '>Recent</label>
                 </div>
                 <div className="ml-8 w-[390px]  pl-5 pt-5 h-72  rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out  text-gray-500">
                     <label className='text-xl font-bold '>Agenda</label>
