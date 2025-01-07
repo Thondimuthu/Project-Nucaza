@@ -5,33 +5,29 @@ import morgan from "morgan";
 import cors from "cors";
 import Routes from './Router.js';
 
-
+// Configure environment variables
 dotenv.config();
 
+// Connect to database
 connectDB();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
-  
+app.use(morgan('dev')); // Add logging middleware since morgan is imported
 
+// Routes
 app.use('/api/v1', Routes);
 
-
-
 app.get('/', (req, res) => {
-  res.send("<h1>Welcome </h1>");
+  res.send("<h1>Welcome to the API</h1>");
 });
-
-// app.get('/excelDa',getData)
-
 
 const PORT = process.env.PORT || 8081;
 
-
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server Running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

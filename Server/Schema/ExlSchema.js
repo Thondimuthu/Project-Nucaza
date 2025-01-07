@@ -12,7 +12,8 @@ const ExcelSchema = new Schema({
     },
     rows: [{
         type: Map,
-        of: String
+        of: String,
+        required: true
     }],
     importedAt: {
         type: Date,
@@ -22,11 +23,11 @@ const ExcelSchema = new Schema({
         type: String,
         required: true
     }
+}, {
+    timestamps: true
 });
 
 // Create the model
-const ExcelModel = mongoose.model('excel', ExcelSchema);
+const ExcelModel = mongoose.model('Excel', ExcelSchema);
 
-export default ExcelModel;  
-
-
+export default ExcelModel;
