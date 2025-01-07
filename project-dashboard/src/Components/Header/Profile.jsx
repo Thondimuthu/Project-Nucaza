@@ -25,9 +25,10 @@ function Profile() {
     year: '',
     degrees: [],
     // experience information
-    company: '',
+    experienceCompany: '', // Fixed typo in property name
     experiencePosition: '',
     experienceYear: '',
+    experienceAddress: '', // Added missing property
     experiences: []
   });
 
@@ -439,7 +440,7 @@ function Profile() {
             <div className="space-y-4">
               <div className="flex flex-col">
                 <label className="block text-gray-700 text-xl font-semibold mb-1">Education :</label>
-                <div className="flex gap-2 pl-20">
+                <div className="flex justify-center gap-5 pl-20">
                   <input
                     name="degree"
                     value={formData.degree}
@@ -496,23 +497,26 @@ function Profile() {
                       }
                     }}
                   />
+                </div>
+                <div className='flex justify-center mt-10'>
                   <button
                     disabled={!isEditing}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+                    className="p-1 pl-3 outline-none w-28 text-lg active:border font-bold bg-blue-300 border-gray-300 rounded-md mr-5 border-b-2 border-t-0 border-r-0"
                     onClick={() => {
-                      if (formData.degree.trim() !== '' && formData.university.trim() !== '' && formData.year.trim() !== '') {
+                      if (formData.degree.trim() !== '' && 
+                          formData.university.trim() !== '' && 
+                          formData.year.trim() !== '') {
                         setFormData(prev => ({
                           ...prev,
                           degrees: [...(prev.degrees || []), {
                             degree: prev.degree,
                             university: prev.university,
-                            year: prev.year
+                            year: prev.year,
                           }],
                           degree: '',
                           university: '',
                           year: ''
                         }));
-                        document.querySelector('input[name="degree"]').focus();
                       }
                     }}
                   >
@@ -552,10 +556,10 @@ function Profile() {
             <div className="space-y-4">
               <div className="flex flex-col">
                 <label className="block text-gray-700 text-xl font-semibold mb-1">Experience :</label>
-                <div className="flex gap-2 pl-20">
+                <div className="flex gap-2 pl-20 mt-8">
                   <input
-                    name="company"
-                    value={formData.company}
+                    name="experienceCompany"
+                    value={formData.experienceCompany}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     className="text-gray-600 outline-none h-9 w-64 rounded-md hover:drop-shadow-lg pl-3"
@@ -580,21 +584,37 @@ function Profile() {
                     type="text"
                     placeholder="Year"
                   />
+                  <input
+                    name="experienceAddress"  
+                    value={formData.experienceAddress}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className="text-gray-600 outline-none h-9 w-64 rounded-md hover:drop-shadow-lg pl-3"
+                    type="text"
+                    placeholder="Address"
+                  />
+                </div>
+                <div className='flex justify-center mt-10'>
                   <button
                     disabled={!isEditing}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+                    className="p-1 pl-3 outline-none w-28 text-lg active:border font-bold bg-blue-300 border-gray-300 rounded-md mr-5 border-b-2 border-t-0 border-r-0"
                     onClick={() => {
-                      if (formData.company.trim() !== '' && formData.experiencePosition.trim() !== '' && formData.experienceYear.trim() !== '') {
+                      if (formData.experienceCompany.trim() !== '' && 
+                          formData.experiencePosition.trim() !== '' && 
+                          formData.experienceYear.trim() !== '' &&
+                          formData.experienceAddress.trim() !== '') {
                         setFormData(prev => ({
                           ...prev,
                           experiences: [...(prev.experiences || []), {
-                            company: prev.company,
+                            company: prev.experienceCompany,
                             position: prev.experiencePosition,
-                            year: prev.experienceYear
+                            year: prev.experienceYear,
+                            address: prev.experienceAddress
                           }],
-                          company: '',
+                          experienceCompany: '',
                           experiencePosition: '',
-                          experienceYear: ''
+                          experienceYear: '',
+                          experienceAddress: ''
                         }));
                       }
                     }}
@@ -609,6 +629,7 @@ function Profile() {
                         <span>
                           <div className='font-semibold'>{experience.company}</div>
                           {experience.position} ({experience.year})
+                          <div>{experience.address}</div>
                         </span>
                         <button
                           disabled={!isEditing}
@@ -665,7 +686,7 @@ function Profile() {
                     university: '',
                     year: '',
                     degrees: [],
-                    company: '',
+                    experienceCompany: '',
                     experiencePosition: '',
                     experienceYear: '',
                     experiences: []
