@@ -1,4 +1,3 @@
-import React from 'react';
 import Sidebar from '../Pages/Sidebar.jsx';
 import NavHeader from '../Pages/Header.jsx';
 

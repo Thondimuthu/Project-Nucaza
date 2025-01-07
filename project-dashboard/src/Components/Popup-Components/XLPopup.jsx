@@ -5,10 +5,6 @@ import { TfiImport } from 'react-icons/tfi';
 import { RiFileExcel2Line } from "react-icons/ri";
 import { AddIcon, ThreeDotIcon, WhiteboardIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
 
-
-
-
-
 function XLPopup() {
     const [isShowPopup, setIsShowPopup] = useState(false);
     const [excelData, setExcelData] = useState({});
@@ -34,22 +30,28 @@ function XLPopup() {
                         throw new Error('No sheets found in the Excel file');
                     }
 
-                    const sheetsData = wb.SheetNames.reduce((acc, sheetName) => {
+                    const sheetsData = {};
+                    wb.SheetNames.forEach(sheetName => {
                         const ws = wb.Sheets[sheetName];
                         const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
                         
-                        // Ensure each row has the same number of columns
-                        const maxColumns = Math.max(...data.map(row => row.length));
-                        const normalizedData = data.map(row => {
-                            while (row.length < maxColumns) {
-                                row.push('');
-                            }
-                            return row;
-                        });
+                        // Get column headers from first row
+                        const headers = data[0] || [];
                         
-                        acc[sheetName] = normalizedData;
-                        return acc;
-                    }, {});
+                        // Convert remaining rows to objects
+                        const rows = data.slice(1).map(row => {
+                            const rowObj = {};
+                            headers.forEach((header, index) => {
+                                rowObj[header] = row[index] || '';
+                            });
+                            return rowObj;
+                        });
+
+                        sheetsData[sheetName] = {
+                            columns: headers,
+                            rows: rows
+                        };
+                    });
 
                     setExcelData(sheetsData);
                     setSelectedSheet(wb.SheetNames[0]);
@@ -62,14 +64,11 @@ function XLPopup() {
         }
     };
 
-    const handleCellChange = (e, rowIndex, colIndex) => {
+    const handleCellChange = (e, rowIndex, columnName) => {
         if (!selectedSheet) return;
         
         const updatedData = { ...excelData };
-        if (!updatedData[selectedSheet][rowIndex]) {
-            updatedData[selectedSheet][rowIndex] = [];
-        }
-        updatedData[selectedSheet][rowIndex][colIndex] = e.target.value;
+        updatedData[selectedSheet].rows[rowIndex][columnName] = e.target.value;
         setExcelData(updatedData);
     };
 
@@ -80,11 +79,11 @@ function XLPopup() {
         }
 
         const updatedData = { ...excelData };
-        const sheetData = updatedData[selectedSheet];
-        const columnCount = sheetData[0]?.length || 1;
-        const newRow = new Array(columnCount).fill('');
-        newRow[0] = sheetData.length;
-        sheetData.push(newRow);
+        const newRow = {};
+        updatedData[selectedSheet].columns.forEach(col => {
+            newRow[col] = '';
+        });
+        updatedData[selectedSheet].rows.push(newRow);
         setExcelData(updatedData);
     };
 
@@ -100,16 +99,10 @@ function XLPopup() {
         }
 
         const updatedData = { ...excelData };
-        const sheetData = updatedData[selectedSheet];
-
-        if (!sheetData || !sheetData[0]) {
-            updatedData[selectedSheet] = [[newColumnTitle]];
-        } else {
-            sheetData[0].push(newColumnTitle);
-            for (let i = 1; i < sheetData.length; i++) {
-                sheetData[i].push('');
-            }
-        }
+        updatedData[selectedSheet].columns.push(newColumnTitle);
+        updatedData[selectedSheet].rows.forEach(row => {
+            row[newColumnTitle] = '';
+        });
 
         setExcelData(updatedData);
         setNewColumnTitle('');
@@ -126,10 +119,12 @@ function XLPopup() {
             return;
         }
 
-        const newSheetData = [['Sl. No.']];
         setExcelData({
             ...excelData,
-            [newSheetName]: newSheetData,
+            [newSheetName]: {
+                columns: ['Sl. No.'],
+                rows: []
+            }
         });
         setSelectedSheet(newSheetName);
         setNewSheetName('');
@@ -144,8 +139,14 @@ function XLPopup() {
 
         try {
             const wb = XLSX.utils.book_new();
-            Object.keys(excelData).forEach((sheetName) => {
-                const ws = XLSX.utils.aoa_to_sheet(excelData[sheetName]);
+            Object.entries(excelData).forEach(([sheetName, sheetData]) => {
+                const wsData = [
+                    sheetData.columns,
+                    ...sheetData.rows.map(row => 
+                        sheetData.columns.map(col => row[col] || '')
+                    )
+                ];
+                const ws = XLSX.utils.aoa_to_sheet(wsData);
                 XLSX.utils.book_append_sheet(wb, ws, sheetName);
             });
             XLSX.writeFile(wb, 'exported_data.xlsx');
@@ -160,32 +161,29 @@ function XLPopup() {
             return <div>No data to display</div>;
         }
 
-        const data = excelData[selectedSheet];
+        const { columns, rows } = excelData[selectedSheet];
+        
         return (
             <div className="overflow-y-scroll h-40 border mt-3">
                 <table className="border-collapse w-full">
                     <thead>
                         <tr className="border">
-                            {data[0] &&
-                                data[0].map((col, index) => (
-                                    <th key={index} className="border px-4 py-2 text-left">
-                                        {col}
-                                    </th>
-                                ))}
+                            {columns.map((col, index) => (
+                                <th key={index} className="border px-4 py-2 text-left">
+                                    {col}
+                                </th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody className="border">
-                        {data.slice(1).map((row, rowIndex) => (
+                        {rows.map((row, rowIndex) => (
                             <tr key={rowIndex}>
-                                {row.map((cell, cellIndex) => (
-                                    <td
-                                        key={`${rowIndex}-${cellIndex}`}
-                                        className="border px-1"
-                                    >
+                                {columns.map((col, colIndex) => (
+                                    <td key={`${rowIndex}-${colIndex}`} className="border px-1">
                                         <input
                                             type="text"
-                                            value={cell || ''}
-                                            onChange={(e) => handleCellChange(e, rowIndex + 1, cellIndex)}
+                                            value={row[col] || ''}
+                                            onChange={(e) => handleCellChange(e, rowIndex, col)}
                                             className="w-full text-xl p-2 rounded-md outline-none"
                                         />
                                     </td>
@@ -218,36 +216,43 @@ function XLPopup() {
     };
 
     const handleSave = async () => {
-        if (Object.keys(excelData).length === 0) {
-            alert('No data to save');
-            return;
-        }
-        
-
         try {
+            if (!selectedSheet) {
+                throw new Error('No sheet selected');
+            }
+
+            const sheetData = excelData[selectedSheet];
+            const data = {
+                sheetName: selectedSheet,
+                columns: sheetData.headers,
+                rows: sheetData.rows,
+                importedBy: 'user' // You may want to get this from auth context
+            };
+
             const response = await fetch('http://localhost:8080/api/v1/excelData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    data: excelData
-                })
+                body: JSON.stringify({ data })
             });
-
+    
             if (!response.ok) {
-                throw new Error('Failed to save data');
+                throw new Error(`Failed to save data: ${response.status}`);
             }
-
+    
             const result = await response.json();
-            console.log(result);
-            
-            alert('Data saved successfully!');
+            if (result.success) {
+                alert('Data saved successfully');
+            } else {
+                throw new Error(result.message);
+            }
         } catch (error) {
-            console.error('Error saving data:', error);
-            alert('Failed to save data. Please try again.');
+            console.error('Error saving data:', error.message);
+            alert(`Failed to save data: ${error.message}`);
         }
     };
+    
 
     return (
         <div>

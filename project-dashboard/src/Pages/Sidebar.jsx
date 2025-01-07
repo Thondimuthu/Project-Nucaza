@@ -23,7 +23,7 @@ const sidebarLinks = [
 
 const Sidebar = () => {
   return (
-    <div className="lg:border lg:border-gray-200 lg:w-96 lg:max-h-screen lg:overflow-y-auto lg:mt-2 lg:rounded-lg lg:shadow-md md:border md:border-gray-200 md:w-96 md:max-h-screen md:overflow-y-auto md:mt-2 md:rounded-lg md:shadow-md">
+    <div className="lg:border lg:border-gray-200 lg:w-96 lg:h-screen lg:overflow-y-auto lg:mt-2 lg:rounded-lg lg:shadow-md md:border md:border-gray-200 md:w-96 md:max-h-screen md:overflow-y-auto md:mt-2 md:rounded-lg md:shadow-md">
       <div className="lg:flex lg:flex-col lg:p-2">
         <div className="lg:border lg:border-b-2 lg:border-t-0 lg:border-l-0 lg:border-r-0 md:border md:border-b-2 md:border-t-0 md:border-l-0 md:border-r-0">
           {sidebarLinks.slice(0, 2).map((item, index) => (

@@ -1,10 +1,24 @@
+import { useState, useEffect } from 'react';
 import { HomeIcon } from '../../assets/SVGImage/SideBar/Icons.jsx';
 import ManageButton from '../ManageButton.jsx';
 import Settings from '../Settings.jsx';
 import StandardLayout from '../../Layout/StandardLayout.jsx';
 
-
 function Home() {
+    const [userData, setUserData] = useState({
+        fullName: ''
+    });
+
+    useEffect(() => {
+        // Get user data from localStorage that was saved during login
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setUserData({
+                fullName: user.fullName || 'Guest User'
+            });
+        }
+    }, []);
+
     return (
         <>
         <StandardLayout>
@@ -22,7 +36,7 @@ function Home() {
                 </div>
             </div>
                 <div className='text-2xl font-semibold text-gray-800 mb-5 pt-5 ml-16 border-b-2 border-gray-200'>
-                {FormData.fullName}
+                    Welcome, {userData.fullName}
                 </div>
             <div className="grid grid-cols-2 p-5 m-3 gap-4  bg-white ">
 

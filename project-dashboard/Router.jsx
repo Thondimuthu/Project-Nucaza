@@ -10,6 +10,7 @@ import TimeSheet  from './src/Components/Content/TimeSheet.jsx'
 import Everything from './src/Components/Content/Everything.jsx'
 import XlSheets from './src/Components/Content/XlSheets.jsx';
 import Profile from './src/Components/Header/Profile.jsx'
+import Theme from './src/Components/Header/Profile/Theme.jsx';
 
 
 
@@ -25,6 +26,7 @@ function Router() {
     { path: '/timeSheets', element: <TimeSheet /> },
     { path: '/everything', element: <Everything /> },
     {path:'/profile', element:<Profile/>},
+    {path:'/theme', element:<Theme/>},
     {path:'/header', element:<Header/>},
   ];
   
