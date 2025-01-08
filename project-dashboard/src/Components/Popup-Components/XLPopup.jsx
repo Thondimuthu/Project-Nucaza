@@ -220,38 +220,46 @@ function XLPopup() {
             if (!selectedSheet) {
                 throw new Error('No sheet selected');
             }
-
+    
             const sheetData = excelData[selectedSheet];
+            if (!sheetData || !sheetData.headers || !sheetData.rows) {
+                throw new Error('Sheet data is incomplete');
+            }
+    
             const data = {
                 sheetName: selectedSheet,
                 columns: sheetData.headers,
                 rows: sheetData.rows,
-                importedBy: 'user' // You may want to get this from auth context
+                importedBy: 'user' // Replace with actual auth user if available
             };
-
+    
             const response = await fetch('http://localhost:8080/api/v1/excelData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ data })
+                body: JSON.stringify(data) // Removed the unnecessary nesting in `{ data }`
             });
-    
+                console.log(response.status);
+                
             if (!response.ok) {
-                throw new Error(`Failed to save data: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`Failed to save data: ${response.status} - ${errorText}`);
             }
     
             const result = await response.json();
-            if (result.success) {
+    
+            if (result?.success) {
                 alert('Data saved successfully');
             } else {
-                throw new Error(result.message);
+                throw new Error(result?.message || 'Unknown error occurred');
             }
         } catch (error) {
             console.error('Error saving data:', error.message);
             alert(`Failed to save data: ${error.message}`);
         }
     };
+    
     
 
     return (
