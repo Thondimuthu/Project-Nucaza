@@ -1,25 +1,19 @@
 import mongoose from 'mongoose';
-import excelSchema from '../Schema/ExlSchema.js';
+import ExcelModel from '../Schema/ExlSchema.js';
+
 
 export async function saveData(req, res) {
     try {
-        const { sheetName, columns, rows, importedBy } = req.body.data;
-
-        // Create new Excel document
-        const newExcelData = new excelSchema({
-            sheetName,
-            columns,
-            rows,
-            importedBy
-        });
+        
+        const newExcelModel = new excel(req.body)   
 
         // Save to database
-        await newExcelData.save();
+        await newExcelModel.save();
 
         res.status(200).send({ 
             success: true,
             message: 'Data saved successfully',
-            data: newExcelData 
+            data: newExcelModel 
         });
     } catch (error) {
         console.error('Error saving data:', error);
@@ -39,6 +33,7 @@ export async function getData(req, res) {
             success: true,
             data: data
         });
+        
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).send({
