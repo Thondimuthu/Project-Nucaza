@@ -53,6 +53,9 @@ function Profile() {
         },
         body: JSON.stringify(formData)
       });
+      
+      console.log(response.data);
+      
 
       if (!response.ok) {
         throw new Error('Failed to save profile');
